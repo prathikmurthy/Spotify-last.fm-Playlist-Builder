@@ -21,7 +21,7 @@ def jprint(obj):
     print(text)
 
 scope = "playlist-modify-public"
-user='pmurthy20'
+user='pmurthy2'
 
 sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id='0040783bc8f143ac8be71702bab0903f', client_secret='fed0d04254864b6e969a96849e851dd5', scope=scope, redirect_uri='http://example.com'))
 
