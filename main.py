@@ -3,6 +3,7 @@ from spotipy.oauth2 import SpotifyOAuth
 import requests
 import json
 import os
+from dotenv import load_dotenv
 
 def lastfm_get(payload):
     # define headers and URL
@@ -10,7 +11,7 @@ def lastfm_get(payload):
     url = 'https://ws.audioscrobbler.com/2.0/'
 
     # Add API key and format to the payload
-    payload['api_key'] = os.environ.get('LASTFM_KEY')
+    payload['api_key'] = os.getenv('LASTFM_KEY')
     payload['format'] = 'json'
 
     response = requests.get(url, headers=headers, params=payload)
@@ -24,7 +25,9 @@ def jprint(obj):
 scope = "playlist-modify-public"
 user='pmurthy20'
 
-sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=os.environ.get('SPOTIFY_API_KEY'), client_secret=os.environ.get('SPOTIFY_SECRET_KEY'), scope=scope, redirect_uri='http://example.com'))
+load_dotenv()
+
+sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=os.getenv('SPOTIFY_API_KEY'), client_secret=os.getenv('SPOTIFY_API_SECRET'), scope=scope, redirect_uri='http://example.com'))
 
 
 
@@ -35,19 +38,19 @@ sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=os.environ.get('SPOTIFY
 
 # sp.user_playlist_create(user='pmurthy20', name='test', public=True, description='test')
 
-# sp.user_playlist_create(user='pmurthy20', name='last.fm Liked Songs-TEST', public=True, description='This playlist is automatically updated using a Python script whenever a new song is liked on last.fm :)')
+# sp.user_playlist_create(user='pmurthy20', name='last.fm Liked Songs', public=True, description='This playlist is automatically updated using a Python script whenever a new song is liked on last.fm :)')
 
 
 results=sp.user_playlists(user=user)
 
 playlist_list = []
 for idx, item in enumerate(results['items']):
-
-    # if item['name'] == 'last.fm Liked Songs':
-    #     playlist_list.append((item['name'], item['id']))
-
+    # print(item['name'])
     if item['name'] == 'last.fm Liked Songs':
         playlist_list.append((item['name'], item['id']))
+
+# if len(playlist_list) != 0:
+#     print(playlist_list)
 
 # Needs to be reimplemented at some point
 # if 'test' not in playlist_list:
