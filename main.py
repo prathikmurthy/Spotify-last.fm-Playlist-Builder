@@ -29,7 +29,7 @@ load_dotenv()
 
 sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=os.getenv('SPOTIFY_API_KEY'), client_secret=os.getenv('SPOTIFY_API_SECRET'), scope=scope, redirect_uri='http://example.com'))
 
-playlist_name = 'last.fm Liked Songs-TEST'
+playlist_name = 'last.fm Liked Songs-HEROKU_TEST'
 playlist_desc = 'This playlist is automatically updated using a Python script whenever a new song is liked on last.fm :)'
 
 results=sp.user_playlists(user=user)
