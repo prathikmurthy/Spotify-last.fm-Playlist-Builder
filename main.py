@@ -2,6 +2,7 @@ import spotipy
 from spotipy.oauth2 import SpotifyOAuth
 import requests
 import json
+import os
 
 def lastfm_get(payload):
     # define headers and URL
@@ -9,7 +10,7 @@ def lastfm_get(payload):
     url = 'https://ws.audioscrobbler.com/2.0/'
 
     # Add API key and format to the payload
-    payload['api_key'] = '8e2070bb8aa8fbb8bd8f934fdcc1b2d1'
+    payload['api_key'] = os.environ.get('LASTFM_KEY')
     payload['format'] = 'json'
 
     response = requests.get(url, headers=headers, params=payload)
@@ -23,7 +24,7 @@ def jprint(obj):
 scope = "playlist-modify-public"
 user='pmurthy20'
 
-sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id='0040783bc8f143ac8be71702bab0903f', client_secret='fed0d04254864b6e969a96849e851dd5', scope=scope, redirect_uri='http://example.com'))
+sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=os.environ.get('SPOTIFY_API_KEY'), client_secret=os.environ.get('SPOTIFY_SECRET_KEY'), scope=scope, redirect_uri='http://example.com'))
 
 
 
