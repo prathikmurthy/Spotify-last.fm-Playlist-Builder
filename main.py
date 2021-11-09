@@ -32,15 +32,19 @@ sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=os.getenv('SPOTIFY_API_
 playlist_name = 'last.fm Liked Songs-HEROKU_TEST'
 playlist_desc = 'This playlist is automatically updated using a Python script whenever a new song is liked on last.fm :)'
 
-results=sp.user_playlists(user=user)
-
 playlist_list = []
+results=sp.user_playlists(user=user)
 for idx, item in enumerate(results['items']):
     if item['name'] == playlist_name:
         playlist_list.append((item['name'], item['id']))
 
 if len(playlist_list) == 0:
     sp.user_playlist_create(user='pmurthy20', name=playlist_name, public=True, description=playlist_desc)
+    results=sp.user_playlists(user=user)
+    for idx, item in enumerate(results['items']):
+        if item['name'] == playlist_name:
+            playlist_list.append((item['name'], item['id']))
+
 
 r = lastfm_get({
     'method': 'user.getLovedTracks',
