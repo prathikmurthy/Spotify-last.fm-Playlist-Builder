@@ -89,10 +89,10 @@ for track in spotify_playlist_items:
 for x in loved_tracks:
     results= sp.search('track:'+str(x[0])+' artist:'+str(x[1]), type='track', limit=1)
     if len(results['tracks']['items']) > 0:
-        if results['tracks']['items'][0]['name'] not in spotify_playlist_names:
-            sp.playlist_add_items(playlist_id=playlist_list[0][1], items=[results['tracks']['items'][0]['uri'][14:]])
+        # if results['tracks']['items'][0]['name'] not in spotify_playlist_names:
+            # sp.playlist_add_items(playlist_id=playlist_list[0][1], items=[results['tracks']['items'][0]['uri'][14:]])
 
-        # sp.playlist_remove_all_occurrences_of_items(playlist_id=playlist_list[0][1], items=[results['tracks']['items'][0]['uri'][14:]])
+        sp.playlist_remove_all_occurrences_of_items(playlist_id=playlist_list[0][1], items=[results['tracks']['items'][0]['uri'][14:]])
     else:
         print('Unable to add to Playlist: ' + 'track:'+str(x[0]) + ' last.fm artist: ' +str(x[1]))
         
