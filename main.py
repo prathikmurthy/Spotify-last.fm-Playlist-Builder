@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 
 def lastfm_get(payload):
     # define headers and URL
-    headers = {'user-agent': 'prathikm'}
+    headers = {'user-agent': os.getenv('LASTFM_UID')}
     url = 'https://ws.audioscrobbler.com/2.0/'
 
     # Add API key and format to the payload
@@ -23,13 +23,13 @@ def jprint(obj):
     print(text)
 
 scope = "playlist-modify-public"
-user='pmurthy20'
+user=os.getenv('SPOTIFY_UID')
 
 load_dotenv()
 
 sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=os.getenv('SPOTIFY_API_KEY'), client_secret=os.getenv('SPOTIFY_API_SECRET'), scope=scope, redirect_uri='http://example.com'))
 
-playlist_name = 'last.fm Liked Songs-HEROKU_TEST'
+playlist_name = 'last.fm Liked Songs'
 playlist_desc = 'This playlist is automatically updated using a Python script whenever a new song is liked on last.fm :)'
 
 playlist_list = []
@@ -39,7 +39,7 @@ for idx, item in enumerate(results['items']):
         playlist_list.append((item['name'], item['id']))
 
 if len(playlist_list) == 0:
-    sp.user_playlist_create(user='pmurthy20', name=playlist_name, public=True, description=playlist_desc)
+    sp.user_playlist_create(user=os.getenv('SPOTIFY_UID'), name=playlist_name, public=True, description=playlist_desc)
     results=sp.user_playlists(user=user)
     for idx, item in enumerate(results['items']):
         if item['name'] == playlist_name:
@@ -48,7 +48,7 @@ if len(playlist_list) == 0:
 
 r = lastfm_get({
     'method': 'user.getLovedTracks',
-    'user': 'prathikm'
+    'user': os.getenv('LASTFM_UID')
 })
 
 # jprint(r.json())
